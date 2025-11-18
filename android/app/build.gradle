@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         applicationId "com.mealtracker.meal_tracker_app"
-        minSdk 26
+        minSdk 21
         targetSdk 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
