@@ -13,15 +13,60 @@ import 'utils/app_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Set preferred orientations
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  try {
+    // Set preferred orientations
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  } catch (e) {
+    print('Error setting orientations: $e');
+  }
 
-  // Initialize services
-  await DataService.initialize();
-  await NotificationService().initialize();
+  // Initialize services with error handling
+  try {
+    await DataService.initialize();
+  } catch (e) {
+    print('Error initializing DataService: $e');
+  }
+
+  // Initialize notifications (non-blocking)
+  try {
+    await NotificationService().initialize();
+  } catch (e) {
+    print('Error initializing NotificationService: $e');
+    // Continue even if notifications fail
+  }
+
+  // Set custom error widget
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                const SizedBox(height: 16),
+                const Text(
+                  'Something went wrong!',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  details.exception.toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  };
 
   runApp(const MealTrackerApp());
 }

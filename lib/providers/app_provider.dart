@@ -48,20 +48,38 @@ class AppProvider extends ChangeNotifier {
 
       if (_currentUser != null) {
         // Load all data
-        await loadAllData();
+        try {
+          await loadAllData();
+        } catch (e) {
+          print('Error loading data: $e');
+        }
 
         // Record daily login and update streak
-        await _dataService.recordDailyLogin();
-        _currentUser = _dataService.getUser(); // Refresh user data
+        try {
+          await _dataService.recordDailyLogin();
+          _currentUser = _dataService.getUser(); // Refresh user data
+        } catch (e) {
+          print('Error recording login: $e');
+        }
 
         // Check for new achievements
-        await _checkAchievements();
+        try {
+          await _checkAchievements();
+        } catch (e) {
+          print('Error checking achievements: $e');
+        }
       }
 
       // Load theme preference
-      _isDarkMode = _dataService.getSetting('dark_mode', defaultValue: false);
+      try {
+        _isDarkMode = _dataService.getSetting('dark_mode', defaultValue: false);
+      } catch (e) {
+        print('Error loading theme: $e');
+        _isDarkMode = false;
+      }
     } catch (e) {
       _errorMessage = e.toString();
+      print('Error initializing app: $e');
     } finally {
       _isLoading = false;
       notifyListeners();

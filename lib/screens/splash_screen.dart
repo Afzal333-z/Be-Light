@@ -11,6 +11,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String _status = 'Initializing...';
+
   @override
   void initState() {
     super.initState();
@@ -18,16 +20,39 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _navigateToNextScreen() async {
-    await Future.delayed(const Duration(seconds: 2));
+    try {
+      setState(() => _status = 'Loading...');
 
-    if (!mounted) return;
+      // Wait for provider to initialize
+      await Future.delayed(const Duration(seconds: 2));
 
-    final appProvider = Provider.of<AppProvider>(context, listen: false);
-    final hasUser = appProvider.currentUser != null;
+      if (!mounted) return;
 
-    Navigator.of(context).pushReplacementNamed(
-      hasUser ? '/home' : '/onboarding',
-    );
+      setState(() => _status = 'Checking user...');
+
+      final appProvider = Provider.of<AppProvider>(context, listen: false);
+      final hasUser = appProvider.currentUser != null;
+
+      setState(() => _status = 'Ready!');
+
+      // Small delay to show status
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      if (!mounted) return;
+
+      Navigator.of(context).pushReplacementNamed(
+        hasUser ? '/home' : '/onboarding',
+      );
+    } catch (e) {
+      if (mounted) {
+        setState(() => _status = 'Error: $e');
+      }
+      // Still navigate after showing error
+      await Future.delayed(const Duration(seconds: 2));
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed('/onboarding');
+      }
+    }
   }
 
   @override
@@ -124,6 +149,17 @@ class _SplashScreenState extends State<SplashScreen> {
               )
                   .animate(onPlay: (controller) => controller.repeat())
                   .fadeIn(delay: const Duration(milliseconds: 900)),
+
+              const SizedBox(height: 20),
+
+              // Status message for debugging
+              Text(
+                _status,
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.7),
+                  fontSize: 12,
+                ),
+              ),
             ],
           ),
         ),
