@@ -1,64 +1,25 @@
-import 'package:hive/hive.dart';
+// Simple model without Hive code generation for initial setup
+// To enable Hive persistence later, run: flutter pub run build_runner build
 
-part 'user_model.g.dart';
-
-@HiveType(typeId: 0)
-class UserModel extends HiveObject {
-  @HiveField(0)
+class UserModel {
   String id;
-
-  @HiveField(1)
   String name;
-
-  @HiveField(2)
   int age;
-
-  @HiveField(3)
   String gender;
-
-  @HiveField(4)
-  double height; // in cm
-
-  @HiveField(5)
-  double currentWeight; // in kg
-
-  @HiveField(6)
-  double targetWeight; // in kg
-
-  @HiveField(7)
-  String activityLevel; // sedentary, light, moderate, active, very_active
-
-  @HiveField(8)
-  String goal; // lose_weight, gain_weight, maintain_weight
-
-  @HiveField(9)
+  double height;
+  double currentWeight;
+  double targetWeight;
+  String activityLevel;
+  String goal;
   int dailyCalorieGoal;
-
-  @HiveField(10)
   DateTime createdAt;
-
-  @HiveField(11)
   int currentStreak;
-
-  @HiveField(12)
   int longestStreak;
-
-  @HiveField(13)
   int totalPoints;
-
-  @HiveField(14)
   List<String> achievements;
-
-  @HiveField(15)
   bool isPremium;
-
-  @HiveField(16)
   DateTime? premiumExpiryDate;
-
-  @HiveField(17)
   List<DateTime> loginDates;
-
-  @HiveField(18)
   Map<String, dynamic>? preferences;
 
   UserModel({
@@ -84,10 +45,8 @@ class UserModel extends HiveObject {
   })  : achievements = achievements ?? [],
         loginDates = loginDates ?? [];
 
-  // Calculate BMI
   double get bmi => currentWeight / ((height / 100) * (height / 100));
 
-  // Calculate BMR (Basal Metabolic Rate) using Mifflin-St Jeor Equation
   double get bmr {
     if (gender.toLowerCase() == 'male') {
       return (10 * currentWeight) + (6.25 * height) - (5 * age) + 5;
@@ -96,7 +55,6 @@ class UserModel extends HiveObject {
     }
   }
 
-  // Calculate TDEE (Total Daily Energy Expenditure)
   double get tdee {
     double multiplier;
     switch (activityLevel) {
@@ -121,10 +79,9 @@ class UserModel extends HiveObject {
     return bmr * multiplier;
   }
 
-  // Progress percentage
   double get progressPercentage {
     double totalToLose = (currentWeight - targetWeight).abs();
-    double initialWeight = currentWeight; // This should ideally be stored separately
+    double initialWeight = currentWeight;
     double lost = (initialWeight - currentWeight).abs();
     return totalToLose == 0 ? 100 : (lost / totalToLose) * 100;
   }

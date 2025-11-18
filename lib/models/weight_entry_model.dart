@@ -1,35 +1,13 @@
-import 'package:hive/hive.dart';
-
-part 'weight_entry_model.g.dart';
-
-@HiveType(typeId: 3)
-class WeightEntryModel extends HiveObject {
-  @HiveField(0)
+class WeightEntryModel {
   String id;
-
-  @HiveField(1)
   String userId;
-
-  @HiveField(2)
   DateTime date;
-
-  @HiveField(3)
-  double weight; // in kg
-
-  @HiveField(4)
-  double? bodyFat; // percentage
-
-  @HiveField(5)
-  double? muscleMass; // in kg
-
-  @HiveField(6)
+  double weight;
+  double? bodyFat;
+  double? muscleMass;
   double? waterPercentage;
-
-  @HiveField(7)
   String? notes;
-
-  @HiveField(8)
-  String? source; // manual, smart_watch, scale
+  String? source;
 
   WeightEntryModel({
     required this.id,

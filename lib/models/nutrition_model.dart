@@ -1,73 +1,25 @@
-import 'package:hive/hive.dart';
-
-part 'nutrition_model.g.dart';
-
-@HiveType(typeId: 2)
-class NutritionModel extends HiveObject {
-  // Macronutrients
-  @HiveField(0)
+class NutritionModel {
   double calories;
-
-  @HiveField(1)
-  double protein; // grams
-
-  @HiveField(2)
-  double carbs; // grams
-
-  @HiveField(3)
-  double fats; // grams
-
-  @HiveField(4)
-  double fiber; // grams
-
-  @HiveField(5)
-  double sugar; // grams
-
-  // Micronutrients
-  @HiveField(6)
-  double? vitaminA; // mcg
-
-  @HiveField(7)
-  double? vitaminC; // mg
-
-  @HiveField(8)
-  double? vitaminD; // mcg
-
-  @HiveField(9)
-  double? vitaminE; // mg
-
-  @HiveField(10)
-  double? vitaminK; // mcg
-
-  @HiveField(11)
-  double? calcium; // mg
-
-  @HiveField(12)
-  double? iron; // mg
-
-  @HiveField(13)
-  double? magnesium; // mg
-
-  @HiveField(14)
-  double? potassium; // mg
-
-  @HiveField(15)
-  double? sodium; // mg
-
-  @HiveField(16)
-  double? zinc; // mg
-
-  @HiveField(17)
-  double? omega3; // grams
-
-  @HiveField(18)
-  double? cholesterol; // mg
-
-  @HiveField(19)
-  double? saturatedFat; // grams
-
-  @HiveField(20)
-  double? transFat; // grams
+  double protein;
+  double carbs;
+  double fats;
+  double fiber;
+  double sugar;
+  double? vitaminA;
+  double? vitaminC;
+  double? vitaminD;
+  double? vitaminE;
+  double? vitaminK;
+  double? calcium;
+  double? iron;
+  double? magnesium;
+  double? potassium;
+  double? sodium;
+  double? zinc;
+  double? omega3;
+  double? cholesterol;
+  double? saturatedFat;
+  double? transFat;
 
   NutritionModel({
     this.calories = 0,
@@ -93,7 +45,6 @@ class NutritionModel extends HiveObject {
     this.transFat,
   });
 
-  // Add nutrition values
   NutritionModel operator +(NutritionModel other) {
     return NutritionModel(
       calories: calories + other.calories,

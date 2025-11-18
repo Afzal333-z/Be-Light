@@ -1,49 +1,17 @@
-import 'package:hive/hive.dart';
-
-part 'journal_entry_model.g.dart';
-
-@HiveType(typeId: 4)
-class JournalEntryModel extends HiveObject {
-  @HiveField(0)
+class JournalEntryModel {
   String id;
-
-  @HiveField(1)
   String userId;
-
-  @HiveField(2)
   DateTime timestamp;
-
-  @HiveField(3)
-  String mood; // happy, sad, stressed, energetic, tired, anxious, calm
-
-  @HiveField(4)
-  int moodIntensity; // 1-5
-
-  @HiveField(5)
+  String mood;
+  int moodIntensity;
   String? feelings;
-
-  @HiveField(6)
   String? notes;
-
-  @HiveField(7)
-  int? hungerLevel; // 1-5
-
-  @HiveField(8)
-  int? energyLevel; // 1-5
-
-  @HiveField(9)
-  int? stressLevel; // 1-5
-
-  @HiveField(10)
-  int? sleepQuality; // 1-5 (from previous night)
-
-  @HiveField(11)
-  List<String>? triggers; // cravings, social_eating, boredom, stress, etc.
-
-  @HiveField(12)
-  List<String>? activities; // exercise, meditation, walk, etc.
-
-  @HiveField(13)
+  int? hungerLevel;
+  int? energyLevel;
+  int? stressLevel;
+  int? sleepQuality;
+  List<String>? triggers;
+  List<String>? activities;
   Map<String, dynamic>? metadata;
 
   JournalEntryModel({

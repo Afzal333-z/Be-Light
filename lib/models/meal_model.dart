@@ -1,51 +1,20 @@
-import 'package:hive/hive.dart';
 import 'nutrition_model.dart';
 
-part 'meal_model.g.dart';
-
-@HiveType(typeId: 1)
-class MealModel extends HiveObject {
-  @HiveField(0)
+class MealModel {
   String id;
-
-  @HiveField(1)
   String userId;
-
-  @HiveField(2)
   DateTime timestamp;
-
-  @HiveField(3)
-  String mealType; // breakfast, lunch, dinner, snack
-
-  @HiveField(4)
+  String mealType;
   String? photoPath;
-
-  @HiveField(5)
   String? photoUrl;
-
-  @HiveField(6)
   List<String> foodItems;
-
-  @HiveField(7)
   NutritionModel nutrition;
-
-  @HiveField(8)
   String? notes;
-
-  @HiveField(9)
-  int? rating; // 1-5 stars
-
-  @HiveField(10)
-  String? mood; // happy, neutral, sad, energetic, tired
-
-  @HiveField(11)
+  int? rating;
+  String? mood;
   bool isAnalyzed;
-
-  @HiveField(12)
   Map<String, dynamic>? aiAnalysis;
-
-  @HiveField(13)
-  List<String>? tags; // healthy, cheat_meal, homemade, restaurant, etc.
+  List<String>? tags;
 
   MealModel({
     required this.id,

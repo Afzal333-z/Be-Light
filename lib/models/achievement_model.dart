@@ -1,46 +1,16 @@
-import 'package:hive/hive.dart';
-
-part 'achievement_model.g.dart';
-
-@HiveType(typeId: 5)
-class AchievementModel extends HiveObject {
-  @HiveField(0)
+class AchievementModel {
   String id;
-
-  @HiveField(1)
   String title;
-
-  @HiveField(2)
   String description;
-
-  @HiveField(3)
-  String category; // streak, weight_loss, meals_logged, consistency, etc.
-
-  @HiveField(4)
+  String category;
   int points;
-
-  @HiveField(5)
   String iconName;
-
-  @HiveField(6)
-  String rarity; // common, rare, epic, legendary
-
-  @HiveField(7)
+  String rarity;
   bool isUnlocked;
-
-  @HiveField(8)
   DateTime? unlockedAt;
-
-  @HiveField(9)
   int currentProgress;
-
-  @HiveField(10)
   int requiredProgress;
-
-  @HiveField(11)
-  String? rewardType; // coins, premium_day, unlock_feature, badge
-
-  @HiveField(12)
+  String? rewardType;
   dynamic rewardValue;
 
   AchievementModel({
@@ -83,11 +53,9 @@ class AchievementModel extends HiveObject {
   }
 }
 
-// Pre-defined achievements
 class Achievements {
   static List<AchievementModel> getDefaultAchievements() {
     return [
-      // Streak Achievements
       AchievementModel(
         id: 'streak_3',
         title: 'Getting Started',
@@ -132,8 +100,6 @@ class Achievements {
         rewardType: 'premium_day',
         rewardValue: 7,
       ),
-
-      // Weight Loss Achievements
       AchievementModel(
         id: 'weight_loss_1kg',
         title: 'First Milestone',
@@ -164,8 +130,6 @@ class Achievements {
         rarity: 'epic',
         requiredProgress: 10,
       ),
-
-      // Meal Logging Achievements
       AchievementModel(
         id: 'meals_10',
         title: 'Food Explorer',
@@ -196,8 +160,6 @@ class Achievements {
         rarity: 'epic',
         requiredProgress: 100,
       ),
-
-      // Consistency Achievements
       AchievementModel(
         id: 'perfect_week',
         title: 'Perfect Week',
@@ -206,10 +168,8 @@ class Achievements {
         points: 50,
         iconName: 'check',
         rarity: 'rare',
-        requiredProgress: 21, // 7 days * 3 meals
+        requiredProgress: 21,
       ),
-
-      // Healthy Choices
       AchievementModel(
         id: 'protein_goal_7',
         title: 'Protein Power',
