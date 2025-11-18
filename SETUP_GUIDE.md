@@ -65,21 +65,9 @@ class GeminiService {
 
 **Important:** Never commit your API key to version control!
 
-## Step 3: Generate Code
+## Step 3: Platform-Specific Setup
 
-The app uses code generation for Hive database adapters. Generate them with:
-
-```bash
-# Generate Hive adapters
-flutter pub run build_runner build
-
-# If you need to rebuild and delete conflicting outputs
-flutter pub run build_runner build --delete-conflicting-outputs
-```
-
-This will generate `.g.dart` files for all your models.
-
-## Step 4: Platform-Specific Setup
+**Note:** The app now uses SharedPreferences for local storage, so no code generation is required! You can run the app immediately after `flutter pub get`.
 
 ### Android Setup
 
@@ -140,7 +128,7 @@ pod install
 cd ..
 ```
 
-## Step 5: Test the App
+## Step 4: Test the App
 
 ### Run on Emulator/Simulator
 
@@ -168,7 +156,7 @@ flutter run --release
    - Trust the computer on your device
    - Run `flutter run`
 
-## Step 6: AWS Setup (Optional - For Production)
+## Step 5: AWS Setup (Optional - For Production)
 
 ### S3 Bucket Setup
 
@@ -193,7 +181,7 @@ flutter run --release
 3. Configure IAM roles
 4. Update the app with your Lambda endpoint
 
-## Step 7: Testing
+## Step 6: Testing
 
 ### Run Tests
 
@@ -232,29 +220,20 @@ flutter test --coverage
 
 ### Common Issues
 
-#### 1. Build Runner Errors
-
-```bash
-# Clear cache and rebuild
-flutter clean
-flutter pub get
-flutter pub run build_runner build --delete-conflicting-outputs
-```
-
-#### 2. Gemini API Errors
+#### 1. Gemini API Errors
 
 - Verify API key is correct
 - Check internet connection
 - Ensure billing is enabled on Google Cloud (if required)
 - Check API quota limits
 
-#### 3. Camera Not Working
+#### 2. Camera Not Working
 
 - Verify permissions are added
 - Check physical device (emulator camera may not work properly)
 - Restart the app after granting permissions
 
-#### 4. Hive Database Errors
+#### 3. Data Storage Issues
 
 ```bash
 # Clear app data
@@ -264,7 +243,7 @@ flutter clean
 flutter run
 ```
 
-#### 5. Dependencies Issues
+#### 4. Dependencies Issues
 
 ```bash
 # Update dependencies
@@ -289,10 +268,12 @@ final compressedBytes = Uint8List.fromList(
 
 ### Database Optimization
 
-Hive is already optimized, but you can:
-- Use lazy loading for large lists
-- Implement pagination
-- Compress data before storing
+The app currently uses SharedPreferences for simplicity:
+- Suitable for moderate amounts of data
+- For larger datasets, consider migrating to:
+  - Hive (with build_runner for type-safe storage)
+  - SQLite (for complex queries)
+  - Firebase (for cloud sync)
 
 ## Deployment
 
